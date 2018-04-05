@@ -3,90 +3,132 @@
     <head>
         <meta charset="utf-8">
             <title>Map Manager</title>
-
+            
             <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
             <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
-
+            
             <!-- CSS  -->
             <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-            <link rel="stylesheet" type="text/css" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-            <link href="css/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection"/>
-            <link rel="stylesheet" type="text/css" href="css/theme.css">
-            <link rel="stylesheet" type="text/css" href="css/maps.css">
-			
-			<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-			<script 
-				src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"
-				integrity="sha256-eGE6blurk5sHj+rmkfsGYeKyZx3M4bG+ZlFyA7Kns7E="
-				crossorigin="anonymous">
-			</script>
-			<script src="js/materialize.min.js"></script>
-			<script type="text/javascript" src="https://www.gstatic.com/firebasejs/4.9.0/firebase.js"></script>
-			<script type="text/javascript" src="js/config.js"></script>
-			<script type="text/javascript" src="js/mapManager.js"></script>
-    </head>
+                <link rel="stylesheet" type="text/css" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+                    <link href="css/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+                    <link rel="stylesheet" type="text/css" href="css/theme.css">
+                        <link rel="stylesheet" type="text/css" href="css/maps.css">
+                            
+                            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+                            <script
+                                src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"
+                                integrity="sha256-eGE6blurk5sHj+rmkfsGYeKyZx3M4bG+ZlFyA7Kns7E="
+                                crossorigin="anonymous">
+                                </script>
+                            <script src="js/materialize.min.js"></script>
+                            <script type="text/javascript" src="https://www.gstatic.com/firebasejs/4.9.0/firebase.js"></script>
+                            
+                            <script type="text/javascript" src="js/config.js"></script>
+                            <style>
+                                #map {
+                                    height: 400px;
+                                    width: 100%;
+                                }
+                            </style>
+                            </head>
     <body>
         <nav class="green lighten-1" role="navigation">
-			<div class="nav-wrapper container"><a id="logo-container" href="index.html" class="brand-logo">Mapeople</a>
-				<a href="#" data-activates="mobile-menu" class="button-collapse"><i class="material-icons">menu</i></a>
-
-				<ul id="nav-mobile-list" class="right hide-on-med-and-down">
-					<li class="login-button">
-						<a href="#">Sign in with Google</a>
-					</li>
-					<li class="logout-button" style="display: none;">
-						<a href="#">Sign Out</a>
-					</li>
-				</ul>
-
-				<ul class="side-nav" id="mobile-menu">
-					<li class="login-button">
-						<a href="#">Sign in with Google</a>
-					</li>
-					<li class="logout-button" style="display: none;">
-						<a href="#">Sign Out</a>
-					</li>
-				</ul>
-			</div>
+            <div class="nav-wrapper container"><a id="logo-container" href="index.html" class="brand-logo">Mapeople</a>
+                <a href="#" data-activates="mobile-menu" class="button-collapse"><i class="material-icons">menu</i></a>
+                
+                <ul id="nav-mobile-list" class="right hide-on-med-and-down">
+                    <li class="login-button">
+                        <a href="#">Sign in with Google</a>
+                    </li>
+                    <li class="logout-button" style="display: none;">
+                        <a href="#">Sign Out</a>
+                    </li>
+                </ul>
+                
+                <ul class="side-nav" id="mobile-menu">
+                    <li class="login-button">
+                        <a href="#">Sign in with Google</a>
+                    </li>
+                    <li class="logout-button" style="display: none;">
+                        <a href="#">Sign Out</a>
+                    </li>
+                </ul>
+            </div>
         </nav>
-		
-		<div id="container" class="container">
-			<!-- Opens modal form -->
-			<a id="buttonNewMap" class="waves-effect waves-light btn modal-trigger" href="#createMap"><i class="material-icons">add</i> Create Map</a>
-		</div>
-		
-		<!-- Form to make new map -->
-		<div id="createMap" class="modal">
-			<div class="modal-content">
-				<h4>Create Map</h4>
-				<div class="row">
-					<form class="col s12" action="#">
-						<div class="row">
-							<div class="input-field col s12">
-								<input placeholder="Map Name" type="text" id="mapName" class="validate">
-								<label for="mapName">Map Name</label>
-							</div>
-						</div>
-						<p id="optionPublic">
-							Make map public?
-							<a class="btn-flat tooltipped" data-position="bottom" data-delay="50" data-tooltip="Public maps can be searched for and viewed by anyone"><i class="material-icons">info</i></a>
-							<input type="checkbox" id="isPublic" class="filled-in" />
-							<label for="isPublic">Public</label>
-						</p>
-					</form>
-				</div>
-			</div>
-			<div class="modal-footer">
-				<div class="flex">
-					<a href="#" id="buttonCreateMap" class="waves-effect waves-light btn">
-						<i class="material-icons">add</i>
-					Create</a>
-					<a href="#" class="modal-action modal-close waves-effect waves-light btn red">Cancel</a>
-				</div>
-				<div class="progress" style="display:none">
-					<div class="indeterminate"></div>
-				</div>
-			</div>
-		</div>
+        
+        <div id="container" class="container">
+            <!-- Opens modal form -->
+            <ul class="collection" id="mainList">
+            </ul>
+            <a id="buttonNewMap" class="waves-effect waves-light btn modal-trigger" href="#createMap"><i class="material-icons">add</i> Create Map</a>
+        </div>
+        
+        <!-- Form to make new map -->
+        <div id="createMap" class="modal">
+            <div class="modal-content">
+                <h4>Create Map</h4>
+                <div class="row">
+                    <form class="col s12" action="#">
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <input placeholder="Map Name" type="text" id="mapName" class="validate">
+                                    <label for="mapName">Map Name <span id='takenHint' style='display:none'> This name has already been taken for <span></span></span></label>
+                                    </div>
+                        </div>
+                        <div class="row">
+                            <div id="map"></div>
+                        </div>
+                        <p id="optionPublic">
+                        Make map public?
+                        <a class="btn-flat tooltipped" data-position="bottom" data-delay="50" data-tooltip="Public maps can be searched for and viewed by anyone"><i class="material-icons">info</i></a>
+                        <input type="checkbox" id="isPublic" class="filled-in" />
+                        <label for="isPublic">Public</label>
+                        </p>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer flex">
+                <a href="#" id="buttonCreateMap" onclick="createMap()" class="waves-effect waves-light btn">
+                    <i class="material-icons">add</i> Create
+                </a>
+                <a href="#" class="modal-action modal-close waves-effect waves-light btn red">Cancel</a>
+            </div>
+        </div>
+        <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDveZT0Eamgm2WQB9PKrg36JcDZh1R3J4Q&libraries=visualization&callback=initMap">
+            </script>
+        <script type="text/javascript" src="js/mapManager.js"></script>
     </body>
 </html>
+
+<!--
+ <html>
+ <head>
+ <style>
+ #map {
+ height: 400px;
+ width: 100%;
+ }
+ </style>
+ </head>
+ <body>
+ <h3>My Google Maps Demo</h3>
+ <div id="map"></div>
+ <script>
+ function initMap() {
+ var uluru = {lat: -25.363, lng: 131.044};
+ var map = new google.maps.Map(document.getElementById('map'), {
+ zoom: 4,
+ center: uluru
+ });
+ var marker = new google.maps.Marker({
+ position: uluru,
+ map: map
+ });
+ }
+ </script>
+ <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDveZT0Eamgm2WQB9PKrg36JcDZh1R3J4Q&libraries=visualization&callback=initMap">
+ </script>
+ </body>
+ </html>
+ -->
+
